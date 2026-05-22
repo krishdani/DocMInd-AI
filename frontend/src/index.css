@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222 47% 11%;
+    --foreground: 213 31% 91%;
+    --card: 222 47% 14%;
+    --card-foreground: 213 31% 91%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 213 31% 91%;
+    --primary: 252 95% 67%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 47% 18%;
+    --secondary-foreground: 213 31% 91%;
+    --muted: 223 47% 16%;
+    --muted-foreground: 215 20% 55%;
+    --accent: 252 95% 67%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 47% 22%;
+    --input: 222 47% 18%;
+    --ring: 252 95% 67%;
+    --radius: 0.75rem;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 252 95% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 252 95% 60%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  ::selection {
+    @apply bg-primary/30 text-foreground;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+}
+
+@layer components {
+  /* Glass morphism effect */
+  .glass {
+    @apply bg-card/80 backdrop-blur-md border border-border/50;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-violet-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent;
+  }
+
+  /* Glow effect */
+  .glow {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+  }
+
+  /* Shimmer loading skeleton */
+  .skeleton {
+    @apply relative overflow-hidden bg-muted;
+  }
+  .skeleton::after {
+    @apply absolute inset-0;
+    content: '';
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--muted-foreground) / 0.1),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+    transform: translateX(-100%);
+  }
+
+  /* Chat bubble */
+  .chat-bubble-user {
+    @apply bg-primary/20 border border-primary/30 rounded-2xl rounded-br-sm;
+  }
+  .chat-bubble-ai {
+    @apply bg-card border border-border rounded-2xl rounded-bl-sm;
+  }
+
+  /* File type badge */
+  .badge-pdf    { @apply bg-red-500/20 text-red-400 border-red-500/30; }
+  .badge-audio  { @apply bg-green-500/20 text-green-400 border-green-500/30; }
+  .badge-video  { @apply bg-blue-500/20 text-blue-400 border-blue-500/30; }
+
+  /* Dropzone active state */
+  .dropzone-active {
+    @apply border-primary bg-primary/5 scale-[1.01];
+  }
+}
+
+/* Markdown content styling inside chat */
+.prose-chat h1, .prose-chat h2, .prose-chat h3 {
+  @apply font-semibold text-foreground mt-4 mb-2;
+}
+.prose-chat p { @apply mb-3 leading-relaxed; }
+.prose-chat code {
+  @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-primary;
+}
+.prose-chat pre {
+  @apply bg-muted p-4 rounded-lg overflow-x-auto my-3;
+}
+.prose-chat ul { @apply list-disc list-inside mb-3 space-y-1; }
+.prose-chat ol { @apply list-decimal list-inside mb-3 space-y-1; }
+.prose-chat blockquote {
+  @apply border-l-4 border-primary/50 pl-4 italic text-muted-foreground my-3;
+}
+
+/* Typing indicator animation */
+.typing-dot {
+  @apply w-2 h-2 bg-primary/70 rounded-full;
+  animation: typing-bounce 1.4s infinite ease-in-out;
+}
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+  40% { transform: scale(1.2); opacity: 1; }
+}
